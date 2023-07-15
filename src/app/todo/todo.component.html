@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+        <div style="background-image:linear-gradient(90deg, #c7d9ff 0%, #90b4ff 35%, #4776e6 100%); height: 93vh;"
+            class="col-md-3">
+            <mat-card class="mt-2">
+                <form [formGroup]="todoForm" style="background-image: linear-gradient(90deg, #ADD8E6 0%, #F8F8FF 70%);">
+                    <p class="mt-2">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Task Name</mat-label>
+                            <input formControlName="item" matInput placeholder="Enter Task.....">
+                            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                            <mat-hint>Add Task Name</mat-hint>
+                        </mat-form-field>
+                        <button style="display: flex; width: 50%; " *ngIf=" !isEditEnabled " (click)="addTasks()"
+                            mat-raised-button [disabled]="todoForm.invalid" color="primary">
+                            ADD
+                        </button>
+                        <button style="display: flex; width: 50%;" *ngIf="isEditEnabled" (click)="updateTasks()" mat-raised-button
+                            [disabled]="todoForm.invalid" color="primary">
+                            Update
+                        </button>
+                    </p>
+                </form>
+            </mat-card>
+        </div>
+        <div style="background-image: linear-gradient(90deg, #f6d365 30%, #fda085 70%);" class="col-md-9">
+            <div cdkDropListGroup>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="example-container">
+                            <h2 class="h2">To do <span *ngIf="tasks.length > 0"> - {{tasks.length}}</span></h2>
+                            <hr style="border-top: 5px solid #FFFFFF; margin-top: 2rem; margin-bottom: 2rem;">
+                            <div cdkDropList [cdkDropListData]="tasks" class="example-list"
+                                (cdkDropListDropped)="drop($event)">
+                                <div class="example-box" *ngFor="let item of tasks ; let i =index" cdkDrag>
+                                    {{item.description }}
+                                    <div class="box">
+                                        <button mat-icon-button color="warn" (click)="deleteTask(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="primary" (click)="onEdit(item,i)">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-container">
+                            <h2 class="h2">In Progress <span *ngIf="inprogress.length > 0"> -
+                                    {{inprogress.length}}</span></h2>
+                                    <hr style="border-top: 5px solid #FFFFFF; margin-top: 2rem; margin-bottom: 2rem;">
+                            <div cdkDropList [cdkDropListData]="inprogress" class="example-list"
+                                (cdkDropListDropped)="drop($event)">
+                                <div class="example-box" *ngFor="let item of inprogress ; let i =index" cdkDrag>
+                                    {{item.description }}
+                                    <button mat-icon-button color="warn" (click)="deleteInProgrssTask(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="example-container">
+                            <h2 class="h2">Done <span *ngIf="done.length > 0"> - {{done.length}}</span></h2>
+                            <hr style="border-top: 5px solid #FFFFFF; margin-top: 2rem; margin-bottom: 2rem;">
+                            <div cdkDropList [cdkDropListData]="done" class="example-list"
+                                (cdkDropListDropped)="drop($event)">
+                                <div class="example-box" *ngFor="let item of done ; let i =index" cdkDrag>
+                                    {{item.description }}
+                                    <div class="box">
+                                        <button mat-icon-button color="warn" (click)="deleteDoneTask(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="primary">
+                                            <mat-icon style="color: green;">check_circle</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
